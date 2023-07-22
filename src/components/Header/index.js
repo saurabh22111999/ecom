@@ -53,7 +53,8 @@ const Header = () => {
             );
           })}
         </nav>
-        <button
+        <Link
+          to={"cart"}
           className="inline-flex items-center
          text-white bg-indigo-500 border-0 
          py-2 px-4 focus:outline-none hover:bg-indigo-600
@@ -71,7 +72,7 @@ const Header = () => {
           >
             <path d="M5 12h14M12 5l7 7-7 7"></path>
           </svg>
-        </button>
+        </Link>
       </div>
     </header>
   );

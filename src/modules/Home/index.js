@@ -4,6 +4,7 @@ import Hero from "../../components/Hero";
 import FeatureCard from "../../components/FeatureCard";
 import Stats from "../../components/StatCard";
 import ProductCard from "../../components/ProductCard";
+import Categories from "../../components/Categories/Categories";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -21,6 +22,7 @@ const Home = () => {
   return (
     <>
       <Hero />
+      <Categories />
       <div className="flex flex-col text-center w-full mt-20">
         <h2 className="text-xs text-indigo-500 tracking-widest font-medium title-font mb-1">
           PRODUCTS
@@ -35,7 +37,6 @@ const Home = () => {
         <div className=" text-center font-bold mt-20 text-lg">Loading...</div>
       )}
 
-      <FeatureCard />
       <Stats />
     </>
   );

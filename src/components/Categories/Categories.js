@@ -16,7 +16,14 @@ const Categories = () => {
   }, []);
 
   if (categories.length === 0) {
-    return <div>Loading.......</div>;
+    return (
+      <div
+        className="sm:text-3xl text-2xl 
+font-medium title-font text-gray-900 text-center m-10"
+      >
+        Loading.......
+      </div>
+    );
   }
 
   return <FeatureCard cards={categories} />;
