@@ -1,6 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const [sp, setSp] = useState("");
+  const nv = useNavigate();
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const response = await fetch("https://fakestoreapi.com/products/5");
+      const data = await response.json();
+      console.log(data);
+      setSp(data);
+    };
+    fetchProducts();
+  }, []);
+  console.log(sp);
+  const handleCart = (id) => {
+    nv(`/products/${id}`);
+  };
+
   return (
     <section className="text-gray-600 body-font mt-20">
       <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
@@ -8,28 +25,28 @@ const Hero = () => {
           <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
             Before they sold out
             <br className="hidden lg:inline-block" />
-            readymade gluten
           </h1>
-          <p className="mb-8 leading-relaxed">
-            Copper mug try-hard pitchfork pour-over freegan heirloom neutra air
-            plant cold-pressed tacos poke beard tote bag. Heirloom echo park
-            mlkshk tote bag selvage hot chicken authentic tumeric truffaut
-            hexagon try-hard chambray.
-          </p>
+          <h3 className="text-gray-500 text-xl tracking-widest title-font mb-1 capitalize">
+            {sp?.category}
+          </h3>
+          <p className="mb-8 leading-relaxed">{sp?.description}</p>
           <div className="flex justify-center">
-            <button className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-              Button
-            </button>
-            <button className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
-              Button
+            <button
+              className=" ml-[-1] inline-flex  bg-gray-100   text-lg
+              text-black  border-2 py-2 px-6 focus:outline-none hover:bg-indigo-600 hover:text-white  rounded"
+              onClick={() => {
+                handleCart(sp?.id);
+              }}
+            >
+              Check it out
             </button>
           </div>
         </div>
         <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
           <img
-            className="object-cover object-center rounded"
+            className="object-contain object-center rounded h-[40vh]"
             alt="hero"
-            src="https://dummyimage.com/720x600"
+            src={sp?.image}
           />
         </div>
       </div>

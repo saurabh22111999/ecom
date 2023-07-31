@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Redirect, useNavigate, useParams } from "react-router-dom";
 
 const Product = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState({});
   console.log(id, "id", product);
@@ -17,6 +18,33 @@ const Product = () => {
 
   console.log(product);
   console.log(Object.keys(product));
+
+  const handleCart = (product, redirect) => {
+    console.log(product);
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const isProductExist = cart.find((item) => item.id === product.id);
+    if (isProductExist) {
+      const updatedCart = cart.map((item) => {
+        if (item.id === product.id) {
+          return {
+            ...item,
+            quantity: item.quantity + 1,
+          };
+        }
+        return item;
+      });
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    } else {
+      localStorage.setItem(
+        "cart",
+        JSON.stringify([...cart, { ...product, quantity: 1 }])
+      );
+    }
+    alert("Product added to Cart");
+    if (redirect) {
+      navigate("/cart");
+    }
+  };
   if (Object.keys(product).length === 0)
     return (
       <div
@@ -26,6 +54,7 @@ font-medium title-font text-gray-900 text-center m-10"
         Loading....
       </div>
     );
+
   return (
     <section className="text-gray-600 body-font overflow-hidden">
       <div className="container px-5 py-24 mx-auto">
@@ -178,10 +207,20 @@ font-medium title-font text-gray-900 text-center m-10"
                 ${product?.price}
               </span>
               <div className="flex gap-2 justify-end  w-full">
-                <button className="flex  text-white bg-indigo-500 border-2 py-2 px-6 focus:outline-none hover:bg-indigo-600 hover:border-2 rounded">
+                <button
+                  className="flex  text-white bg-indigo-500 border-2 py-2 px-6 focus:outline-none hover:bg-indigo-600 hover:border-2 rounded"
+                  onClick={() => {
+                    handleCart(product, true);
+                  }}
+                >
                   Buy it now!
                 </button>
-                <button className="flex  text-black  border-2 py-2 px-6 focus:outline-none hover:bg-indigo-600 hover:text-white  rounded">
+                <button
+                  className="flex  text-black  border-2 py-2 px-6 focus:outline-none hover:bg-indigo-600 hover:text-white  rounded"
+                  onClick={() => {
+                    handleCart(product);
+                  }}
+                >
                   Add to Cart
                 </button>
               </div>

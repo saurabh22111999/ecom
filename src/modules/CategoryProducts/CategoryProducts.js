@@ -4,6 +4,7 @@ import ProductCard from "../../components/ProductCard";
 
 const CategoryProducts = () => {
   const { name } = useParams();
+  console.log(useParams());
   const [products, setProducts] = useState([]);
   useEffect(() => {
     const fetchProducts = async () => {
@@ -11,7 +12,7 @@ const CategoryProducts = () => {
         `https://fakestoreapi.com/products/category/${name}`
       );
       const data = await response.json();
-      console.log(data);
+
       setProducts(data);
     };
     fetchProducts();

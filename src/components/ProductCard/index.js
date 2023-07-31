@@ -7,7 +7,6 @@ const ProductCard = ({ products = [] }) => {
       <div className="container px-5 py-10 mx-auto">
         <div className="flex flex-wrap -m-4">
           {products.map((product) => {
-            console.log(product, "product");
             const { category, description, id, image, price, rating, title } =
               product;
             return (
